@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaqt Hisoblagich</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin:0; padding:0; box-sizing: border-box; }
+
+  :root{
+    --violet: #3b82f6;
+    --pink: #0ea5e9;
+    --cyan: #38bdf8;
+    --ink: #eef2f8;
+    --muted: #93a0b4;
+    --line: #364155;
+  }
+
+  body{
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(59,130,246,0.28), transparent 45%),
+      radial-gradient(circle at 90% 15%, rgba(30,58,95,0.4), transparent 45%),
+      radial-gradient(circle at 50% 100%, rgba(56,189,248,0.18), transparent 50%),
+      #12161f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .container-wrap{
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 26px;
+    padding: 1.5px;
+    background: linear-gradient(150deg, rgba(59,130,246,0.55), rgba(255,255,255,0.06) 30%, rgba(14,165,233,0.35) 70%, rgba(59,130,246,0.5));
+    box-shadow: 0 50px 100px -30px rgba(0,0,0,0.8);
+  }
+
+  .container{
+    width: 100%;
+    max-width: 480px;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(59,130,246,0.08), transparent 40%),
+      rgba(20,25,35,0.98);
+    backdrop-filter: blur(24px);
+    border-radius: 25px;
+    padding: 40px 34px 32px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 40px rgba(59,130,246,0.03);
+    position: relative;
+    overflow: hidden;
+  }
+  .container::before{
+    content: "";
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 180px; height: 180px;
+    background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+    border-radius: 50%;
+    opacity: 0.18;
+    filter: blur(30px);
+  }
+  .container::after{
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  }
+
+  .corner-mark{
+    position: absolute;
+    top: 22px; right: 26px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #4b5a75;
+  }
+
+  .ceo-badge{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    padding: 8px 20px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(14,165,233,0.12));
+    border: 1px solid rgba(59,130,246,0.45);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 24px rgba(59,130,246,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .ceo-badge .dot{
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+    box-shadow: 0 0 10px rgba(59,130,246,1);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity: 1; transform: scale(1); }
+    50%{ opacity: 0.5; transform: scale(1.3); }
+  }
+  .ceo-badge .label{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7fb3f7;
+  }
+  .ceo-badge .name{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    background: linear-gradient(135deg, #ffffff 0%, #a9d0ff 45%, #3b82f6 75%, #0ea5e9 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 20px rgba(59,130,246,0.5);
+    animation: shine 3s linear infinite;
+  }
+  @keyframes shine{
+    0%{ background-position: 0% center; }
+    100%{ background-position: 200% center; }
+  }
+
+  h1{
+    font-family: 'Space Grotesk', sans-serif;
+    text-align: center;
+    color: var(--ink);
+    font-size: 27px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  h1 .grad{
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .subtitle{
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 30px;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+
+  .input-group{ margin-bottom: 16px; position: relative; z-index: 1; }
+  label{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 13px;
+  }
+  input[type="datetime-local"]{
+    width: 100%;
+    padding: 13px 15px;
+    border: 1.5px solid var(--line);
+    background: #1e2534;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    color-scheme: dark;
+  }
+  input[type="datetime-local"]:focus{
+    border-color: var(--violet);
+    background: #232b3d;
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.18);
+  }
+
+  .arrow{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px 0 14px;
+  }
+  .arrow svg{
+    width: 20px; height: 20px;
+    color: var(--violet);
+  }
+
+  button.calc{
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #10b981, #0d9488);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15.5px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    margin-top: 8px;
+    box-shadow: 0 14px 30px -12px rgba(16,185,129,0.55);
+  }
+  button.calc:hover{ transform: translateY(-2px); }
+  button.calc:active{ transform: translateY(0); }
+
+  .result{
+    margin-top: 26px;
+    display: none;
+  }
+  .result.show{
+    display: block;
+    animation: fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn{
+    from{ opacity:0; transform: translateY(10px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .result-title{
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-bottom: 18px;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #1e2534;
+    line-height: 1.5;
+  }
+
+  .result-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .result-item{
+    background: linear-gradient(160deg, #1c2333, #1a2029);
+    border-radius: 12px;
+    padding: 13px 8px;
+    text-align: center;
+    border: 1px solid var(--line);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+  .result-item.full{ grid-column: 1 / -1; }
+
+  .result-value{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 3px;
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .result-item.full .result-value{
+    background: linear-gradient(135deg, var(--pink), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .result-label{
+    font-size: 10.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+
+  .copy-btn{
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    background: #1e2534;
+    border: 1.5px solid var(--violet);
+    color: var(--violet);
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .copy-btn:hover{
+    background: var(--violet);
+    color: #12161f;
+  }
+  .copy-btn.copied{
+    background: #16a34a;
+    border-color: #16a34a;
+    color: #fff;
+  }
+  .copy-btn svg{ width: 15px; height: 15px; }
+
+  .error{
+    background: #ffebee;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 18px;
+    display: none;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .error.show{ display: block; }
+</style>
+</head>
+<body>
+  <div class="container-wrap">
+  <div class="container">
+    <div class="corner-mark">Est. 2026</div>
+    <div class="ceo-badge"><span class="dot"></span><span class="label">CEO</span><span class="name">Salimov Nuriddin</span></div>
+    <h1>⏳ Vaqt <span class="grad">Hisoblagich</span></h1>
+    <p class="subtitle">Ikki sana va vaqt orasidagi farqni hisoblaydi</p>
+
+    <div class="input-group">
+      <label for="boshlash">📅 Boshlash sanasi va vaqti</label>
+      <input type="datetime-local" id="boshlash" value="2008-05-10T00:00">
+    </div>
+
+    <div class="arrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+    </div>
+
+    <div class="input-group">
+      <label for="tugash">🏁 Tugash sanasi va vaqti</label>
+      <input type="datetime-local" id="tugash">
+    </div>
+
+    <button class="calc" onclick="hisobla()">Hisoblash</button>
+
+    <div class="error" id="error"></div>
+
+    <div class="result" id="result">
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-grid">
+        <div class="result-item"><div class="result-value" id="yillar">0</div><div class="result-label">Yil</div></div>
+        <div class="result-item"><div class="result-value" id="oylar">0</div><div class="result-label">Oy</div></div>
+        <div class="result-item"><div class="result-value" id="kunlar">0</div><div class="result-label">Kun</div></div>
+        <div class="result-item"><div class="result-value" id="soatlar">0</div><div class="result-label">Soat</div></div>
+        <div class="result-item"><div class="result-value" id="minutlar">0</div><div class="result-label">Minut</div></div>
+        <div class="result-item"><div class="result-value" id="sekundlar">0</div><div class="result-label">Sekund</div></div>
+        <div class="result-item full"><div class="result-value" id="jamiKun">0</div><div class="result-label">Jami kunlar</div></div>
+        <div class="result-item full"><div class="result-value" id="jamiSoat">0</div><div class="result-label">Jami soatlar</div></div>
+        <div class="result-item full"><div class="result-value" id="jamiMinut">0</div><div class="result-label">Jami minutlar</div></div>
+      </div>
+
+      <button class="copy-btn" id="copyBtn" onclick="nusxalash()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span id="copyText">Natijani nusxalash</span>
+      </button>
+    </div>
+  </div>
+  </div>
+
+<script>
+  function hozirgiVaqt() {
+    const now = new Date();
+    const offset = now.getTimezoneOffset() * 60000;
+    const local = new Date(now.getTime() - offset);
+    return local.toISOString().slice(0, 16);
+  }
+  document.getElementById('tugash').value = hozirgiVaqt();
+
+  let oxirgiNatija = "";
+
+  function hisobla() {
+    const boshlashInput = document.getElementById('boshlash').value;
+    const tugashInput = document.getElementById('tugash').value;
+    const errorEl = document.getElementById('error');
+    const resultEl = document.getElementById('result');
+
+    errorEl.classList.remove('show');
+    resultEl.classList.remove('show');
+
+    if (!boshlashInput || !tugashInput) {
+      errorEl.textContent = 'Iltimos, ikkala sana va vaqtni ham tanlang!';
+      errorEl.classList.add('show');
+      return;
+    }
+
+    const boshlash = new Date(boshlashInput);
+    const tugash = new Date(tugashInput);
+    const farqMs = Math.abs(tugash - boshlash);
+
+    let start = new Date(Math.min(boshlash, tugash));
+    let end = new Date(Math.max(boshlash, tugash));
+
+    let yillar = end.getFullYear() - start.getFullYear();
+    let oylar = end.getMonth() - start.getMonth();
+    let kunlar = end.getDate() - start.getDate();
+
+    if (kunlar < 0) {
+      oylar--;
+      const oldingiOy = new Date(end.getFullYear(), end.getMonth(), 0);
+      kunlar += oldingiOy.getDate();
+    }
+    if (oylar < 0) {
+      yillar--;
+      oylar += 12;
+    }
+
+    const jamiSekund = Math.floor(farqMs / 1000);
+    const jamiMinut = Math.floor(farqMs / (1000 * 60));
+    const jamiSoat = Math.floor(farqMs / (1000 * 60 * 60));
+    const jamiKun = Math.floor(farqMs / (1000 * 60 * 60 * 24));
+
+    const soatlar = Math.floor((farqMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutlar = Math.floor((farqMs % (1000 * 60 * 60)) / (1000 * 60));
+    const sekundlar = Math.floor((farqMs % (1000 * 60)) / 1000);
+
+    document.getElementById('yillar').textContent = yillar;
+    document.getElementById('oylar').textContent = oylar;
+    document.getElementById('kunlar').textContent = kunlar;
+    document.getElementById('soatlar').textContent = soatlar;
+    document.getElementById('minutlar').textContent = minutlar;
+    document.getElementById('sekundlar').textContent = sekundlar;
+    document.getElementById('jamiKun').textContent = jamiKun.toLocaleString('uz-UZ');
+    document.getElementById('jamiSoat').textContent = jamiSoat.toLocaleString('uz-UZ');
+    document.getElementById('jamiMinut').textContent = jamiMinut.toLocaleString('uz-UZ');
+
+    const formatSana = (d) => d.toLocaleString('uz-UZ', {
+      day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+
+    let sarlavha;
+    if (boshlash.getTime() === tugash.getTime()) {
+      sarlavha = '📍 Ikkala sana va vaqt ham bir xil!';
+    } else if (tugash > boshlash) {
+      sarlavha = `${formatSana(boshlash)} → ${formatSana(tugash)} oralig'idagi vaqt`;
+    } else {
+      sarlavha = `${formatSana(tugash)} → ${formatSana(boshlash)} oralig'idagi vaqt`;
+    }
+    document.getElementById('resultTitle').textContent = sarlavha;
+
+    oxirgiNatija =
+`${sarlavha}
+
+${yillar} yil, ${oylar} oy, ${kunlar} kun
+${soatlar} soat, ${minutlar} minut, ${sekundlar} sekund
+
+Jami kunlar: ${jamiKun.toLocaleString('uz-UZ')}
+Jami soatlar: ${jamiSoat.toLocaleString('uz-UZ')}
+Jami minutlar: ${jamiMinut.toLocaleString('uz-UZ')}`;
+
+    document.getElementById('copyBtn').classList.remove('copied');
+    document.getElementById('copyText').textContent = 'Natijani nusxalash';
+
+    resultEl.classList.add('show');
+  }
+
+  function nusxalash() {
+    if (!oxirgiNatija) return;
+    navigator.clipboard.writeText(oxirgiNatija).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const txt = document.getElementById('copyText');
+      btn.classList.add('copied');
+      txt.textContent = 'Nusxalandi ✓';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        txt.textContent = 'Natijani nusxalash';
+      }, 1800);
+    });
+  }
+
+  window.onload = hisobla;
+</script>
+</body>
+</html>
